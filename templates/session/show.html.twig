@@ -5,19 +5,22 @@
 {% block body %}
     <h1> Detail session</h1>
     
-            {{session.formation}}
-            {{session.dateDebut|date('d-m-Y')}}
-            {{session.dateFin|date('d-m-Y')}}
-            {{session.nbPlace}}
-            {{session.formateur}}
+        <h2>{{session.formation}}</h2>
+        <p>
+            Formateur : {{session.formateur}}
+            Début de la session : {{session.dateDebut|date('d-m-Y')}}
+            Fin de la session : {{session.dateFin|date('d-m-Y')}}
+            place disponible : {{session.nbPlace}}
+        </p>  
+
 
         <h2>liste inscrit</h2>
             {% for inscrit in session.stagiaires %}
-                {{inscrit.nom}} {{inscrit.prenom}} </br>
+                {{inscrit}} <a href="{{ path('moins_session_stagiaire', {'id': inscrit.id}) }}">enlever</a></br>
             {% endfor %}
         <h2>liste non-inscrit</h2>
             {% for nonInscrit in nonInscrits %}
-                {{nonInscrit.nom}} {{nonInscrit.prenom}} </br>
+                {{nonInscrit}} <a href="{{ path('edit_session_stagiaire'), {'id': inscrit.id} }}">ajouter</a></br>
             {% endfor %}
         <h2>liste module</h2>
             {% for programme in session.programmes %}

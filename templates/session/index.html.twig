@@ -23,7 +23,6 @@
             <td>{{session.nbPlace}}</td>
             <td>{{session.stagiaires.count() }}</td>
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
-            <!--path('show_session', {'id': session.id})-->
             <td><a href="{{ path('show_session', {'id': session.id}) }}">detail</a></td>
         </tr>
         {% endfor %}
