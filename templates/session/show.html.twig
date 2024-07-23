@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SessionController!{% endblock %}
+
+{% block body %}
+    <h1> Detail session</h1>
+    
+            {{session.formation}}
+            {{session.dateDebut|date('d-m-Y')}}
+            {{session.dateFin|date('d-m-Y')}}
+            {{session.nbPlace}}
+            {{session.formateur}}
+
+        <h2>liste inscrit</h2>
+            {% for inscrit in session.stagiaires %}
+                {{inscrit.nom}} {{inscrit.prenom}} </br>
+            {% endfor %}
+        <h2>liste non-inscrit</h2>
+            {% for nonInscrit in nonInscrits %}
+                {{nonInscrit.nom}} {{nonInscrit.prenom}} </br>
+            {% endfor %}
+        <h2>liste module</h2>
+            {% for programme in session.programmes %}
+                {{programme.module}} {{programme.nbJours}} </br>
+            {% endfor %}
+        <h2>liste non module</h2>
+            {% for nonProgramme in nonProgrammes %}
+                {{nonProgramme.module}} {{nonProgramme.nbJours}}</br>
+            {% endfor %}
+{% endblock %}
