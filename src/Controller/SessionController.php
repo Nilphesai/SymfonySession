@@ -107,7 +107,7 @@ class SessionController extends AbstractController
         $programme->setNbJours(1);
         //modifié l'objet
         //execute PDO
-        $entityManager->flush();
+        $entityManager->persist($programme);
         $session->addProgramme($programme);
         $module->addProgramme($programme);
         //execute PDO
