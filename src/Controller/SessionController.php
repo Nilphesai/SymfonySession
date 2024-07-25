@@ -7,6 +7,7 @@ use App\Entity\Session;
 use App\Entity\Programme;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
+use App\Form\ProgrammeType;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,12 +87,12 @@ class SessionController extends AbstractController
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
     }
     
-    #[Route('/session/add/{modId}/{sessionId}', name: 'add_session_programme')]
+    #[Route('/session/addMod/{modId}/{sessionId}', name: 'add_session_programme')]
     public function addMod(EntityManagerInterface $entityManager, Request $request): Response
     {
         //récupéré l'objet
         $sessId = $request->attributes->get('sessionId');
-        $modId = $request->attributes->get('sessionId');
+        $modId = $request->attributes->get('modId');
         $module = $entityManager->getRepository(Module::class)->find($modId);
         $session = $entityManager->getRepository(Session::class)->find($sessId);
         
@@ -101,10 +102,13 @@ class SessionController extends AbstractController
                 'No programme found'
             );
         }
+
+        //var_dump($request->request);die;
+        $myNumber = $_POST['nbJours'];
         $programme = new Programme();
         $programme->setModule($module);
         $programme->setSession($session);
-        $programme->setNbJours(1);
+        $programme->setNbJours($myNumber);
         //modifié l'objet
         //execute PDO
         $entityManager->persist($programme);
@@ -116,7 +120,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
     }
 
-    #[Route('/session/remove/{progId}/{modId}/{sessionId}', name: 'remove_session_programme')]
+    #[Route('/session/removeMod/{progId}/{modId}/{sessionId}', name: 'remove_session_programme')]
     public function removeMod(EntityManagerInterface $entityManager, Request $request): Response
     {
         //récupéré l'objet
@@ -142,8 +146,9 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}', name: 'show_session')]
-    public function show(Session $session = null, SessionRepository $sr): Response
+    public function show(Session $session = null, SessionRepository $sr,Request $request): Response
     {
+        
         $nonInscrits = $sr->findNonInscrits($session->getId());
         $nonProgrammes = $sr->findNonProgrammes($session->getId());
 

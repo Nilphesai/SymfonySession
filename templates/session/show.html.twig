@@ -26,8 +26,16 @@
             {% for programme in session.programmes %}
              {{programme.module}} {{programme.nbJours}}J <a href="{{ path('remove_session_programme', {'progId': programme.id, 'modId': programme.module.id , 'sessionId': session.id}) }}"> enlever </a> </br>
             {% endfor %}
+        
         <h2>liste non module</h2>
+        
             {% for nonModule in nonProgrammes %}
-                {{nonModule}} <a href="{{ path('add_session_programme', {'modId': nonModule.id , 'sessionId': session.id}) }}"> ajouter </a></br>
+                {{nonModule}} 
+                <form method="POST" action="{{path('add_session_programme', {'modId': nonModule.id , 'sessionId': session.id}) }}">
+                <input type="number" min='0' max="20" value="1" name="nbJours">
+                <input type="submit" name="submit" value="Ajouter"></br>
+                </form>
             {% endfor %}
+            
+        
 {% endblock %}
