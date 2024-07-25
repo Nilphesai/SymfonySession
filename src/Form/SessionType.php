@@ -2,40 +2,43 @@
 
 namespace App\Form;
 
+use App\Entity\Session;
 use App\Entity\Formateur;
 use App\Entity\Formation;
-use App\Entity\Session;
 use App\Entity\Stagiaire;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SessionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('intitule')
-            ->add('dateDebut', null, [
+            ->add('intitule', TextType::class)
+            ->add('dateDebut', DateType::class, [
                 'widget' => 'single_text',
             ])
-            ->add('dateFin', null, [
+            ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
             ])
             ->add('nbPlace')
             ->add('formateur', EntityType::class, [
                 'class' => Formateur::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             ->add('formation', EntityType::class, [
                 'class' => Formation::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
-            ->add('stagiaires', EntityType::class, [
-                'class' => Stagiaire::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('valider', SubmitType::class, [
+                'attr' => [
+                        'class' => 'btn btn-success'
+                ]
             ])
         ;
     }

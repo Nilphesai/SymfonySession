@@ -29,20 +29,28 @@ class SessionController extends AbstractController
     #[Route('/session/new', name: 'new_session')]
     public function new(Session $session = null, Request $request, EntityManagerInterface $entityManager):Response
     {
-        $session = new Session();
+        if(!$session){
+            $session = new Session();
+        }
+        
 
-        $form = $this-createForm(SessionType::class, $session);
+        $form = $this->createForm(SessionType::class, $session);
         
         $form->handleRequest($request);
         
-        if($form->isSubmited() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid()){
 
-            $session = $form-getData();
+            $session = $form->getData();
             $entityManager->persist($session);
             $entityManager->flush();
+
+            return $this->redirectToRoute('app_session');
         }
 
-        return $this->redirectToRoute('app_session');
+        return $this->render('session/new.html.twig', [
+            'formAddSession' => $form,
+            'edit' => $session->getId(),
+        ]);    
     }
 
     #[Route('/session/add/{id}/{sessionId}', name: 'add_session_stagiaire')]
