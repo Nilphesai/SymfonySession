@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StagiaireController!{% endblock %}
+
+{% block body %}
+
+    <h1> Ajouter un Stagiaire</h1>
+    
+    {#{{ form(formAddSession)}}#}
+    {{ form_start(formAddStagiaire) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.nom)}}
+        </div>
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.prenom)}}
+        </div>
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.sexe)}}
+        </div>
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.dateNaissance)}}
+        </div>
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.email)}}
+        </div>
+        <div class="col-sm">
+            {{ form_row(formAddStagiaire.telephone)}}
+        </div>
+    </div>
+        
+        {{ form_row(formAddStagiaire.valider)}}
+    {{ form_end(formAddStagiaire) }}
+{% endblock %}
