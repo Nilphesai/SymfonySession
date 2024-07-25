@@ -15,7 +15,7 @@
         
         {% for stagiaire in stagiaires %}
         <tr>
-            <td><a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}"></a>{{stagiaire}}</a></td>
+            <td><a href="{{ path('show_stagiaire', {'id': stagiaire.id}) }}">{{stagiaire}}</a></td>
             <td>{{stagiaire.sexe}}</td>
             <td>{{stagiaire.dateNaissance|date('d-m-Y')}}</td>
             <td>{{stagiaire.email}}</td>

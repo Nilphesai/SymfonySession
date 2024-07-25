@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StagiaireController!{% endblock %}
+
+{% block body %}
+    <h1> Detail Stagiaire</h1>
+    
+        <h2>{{stagiaire}}</h2>
+        <p>
+            
+            Sexe : {{stagiaire.sexe}}</br>
+            date de Naissance : : {{stagiaire.dateNaissance|date('d-m-Y')}}</br>
+            email : {{stagiaire.email}}</br>
+            Tel : {{stagiaire.Telephone}}</br>
+        
+        <h2>liste Session inscrit</h2>
+            {% for session in stagiaire.sessions %}
+            <a href="{{ path('show_session', {'id': session.id}) }}"> {{session}} </a> </br>
+            {% endfor %}
+            
+{% endblock %}

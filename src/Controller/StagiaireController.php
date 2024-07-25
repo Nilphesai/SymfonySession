@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stagiaire;
 use App\Repository\StagiaireRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,9 +20,8 @@ class StagiaireController extends AbstractController
     }
 
     #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
-    public function show(Stagiaire $Stagiaire = null, StagiaireRepository $sr): Response
+    public function show(Stagiaire $stagiaire): Response
     {
-    
         return $this->render('stagiaire/show.html.twig', [
             'stagiaire' => $stagiaire,
         ]);
