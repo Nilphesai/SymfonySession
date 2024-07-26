@@ -17,7 +17,8 @@
         
         <h2>liste Session inscrit</h2>
             {% for session in stagiaire.sessions %}
-            <a href="{{ path('show_session', {'id': session.id}) }}"> {{session}} </a> </br>
+            <a href="{{ path('show_session', {'id': session.id}) }}"> {{session}} </a> 
+            <a href="{{ path('remove_stagiaire_session', {'id': stagiaire.id, 'sessionId': session.id}) }}"> désinscrire </a></br>
             {% endfor %}
             
 {% endblock %}

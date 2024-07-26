@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Entity\Stagiaire;
 use App\Form\StagiaireType;
 use App\Repository\StagiaireRepository;
@@ -47,6 +48,27 @@ class StagiaireController extends AbstractController
             'formAddStagiaire' => $form,
             'edit' => $stagiaire->getId(),
         ]);    
+    }
+
+    #[Route('/stagiaire/remove/{id}/{sessionId}', name: 'remove_stagiaire_session')]
+    public function removeSess(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        //récupéré l'objet
+        $stagId = $request->attributes->get('id');
+        $sessId = $request->attributes->get('sessionId');
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagId);
+        $session = $entityManager->getRepository(Session::class)->find($sessId);
+        if (!$session) {
+            throw $this->createNotFoundException(
+                'No session found'
+            );
+        }
+        //modifié l'objet
+        $stagiaire->removeSession($session);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute("show_stagiaire", ['id' => $stagId]);
     }
 
     #[Route('/stagiaire/{id}/delete', name: 'delete_stagiaire')]
