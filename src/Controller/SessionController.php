@@ -54,24 +54,28 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/add/{id}/{sessionId}', name: 'add_session_stagiaire')]
-    public function addStag(EntityManagerInterface $entityManager, Request $request, Session $session = null): Response
+    public function addStag(EntityManagerInterface $entityManager, Request $request): Response
     {
         //récupéré l'objet
         $stagId = $request->attributes->get('id');
         $sessId = $request->attributes->get('sessionId');
         $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagId);
-        $addSession = $entityManager->getRepository(Session::class)->find($sessId);
-        if (!$stagiaire) {
-            throw $this->createNotFoundException(
-                'No stagiaire found '
-            );
-        }
-        //modifié l'objet
-        $stagiaire->addSession($addSession);
+        $session = $entityManager->getRepository(Session::class)->find($sessId);
+        
+        //vérifier le nombre de stagiaire
+        $limiteInscrit = $session->getNbPlace();
+        $nbStagiaires = count($session->getStagiaires());
+        
+        if ($limiteInscrit >= $nbStagiaires + 1) {
+            //modifié l'objet
+        $stagiaire->addSession($session);
         //execute PDO
         $entityManager->flush();
 
+        }
+
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
+        
     }
 
     #[Route('/session/remove/{id}/{sessionId}', name: 'remove_session_stagiaire')]
@@ -104,28 +108,36 @@ class SessionController extends AbstractController
         $module = $entityManager->getRepository(Module::class)->find($modId);
         $session = $entityManager->getRepository(Session::class)->find($sessId);
         
+        $dureeSession = date_diff($session->getDateDebut(), $session->getDateFin());
+        $duree = $dureeSession->format('%d');
         
-        if (!$modId) {
-            throw $this->createNotFoundException(
-                'No programme found'
-            );
-        }
-
-        //var_dump($request->request);die;
+        //vérification nbJours non dépassé
+        $temps = 0;
         $myNumber = $_POST['nbJours'];
-        $programme = new Programme();
-        $programme->setModule($module);
-        $programme->setSession($session);
-        $programme->setNbJours($myNumber);
-        //modifié l'objet
-        //execute PDO
-        $entityManager->persist($programme);
-        $session->addProgramme($programme);
-        $module->addProgramme($programme);
-        //execute PDO
-        $entityManager->flush();
+        $listProgrammes = $session->getProgrammes();
+        foreach($listProgrammes as $programme){
+            $temps = $temps + $programme->getNbJours(); 
+        }
+        if ($duree > $temps + $myNumber){
+            
+            
+            $programme = new Programme();
+            $programme->setModule($module);
+            $programme->setSession($session);
+            $programme->setNbJours($myNumber);
+            //modifié l'objet
+            //execute PDO
+            $entityManager->persist($programme);
+            $session->addProgramme($programme);
+            $module->addProgramme($programme);
+            //execute PDO
+            $entityManager->flush();
 
+            
+        }
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
+
+        
     }
 
     #[Route('/session/removeMod/{progId}/{modId}/{sessionId}', name: 'remove_session_programme')]
