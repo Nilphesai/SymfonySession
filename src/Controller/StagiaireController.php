@@ -22,14 +22,6 @@ class StagiaireController extends AbstractController
         ]);
     }
 
-    #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
-    public function show(Stagiaire $stagiaire): Response
-    {
-        return $this->render('stagiaire/show.html.twig', [
-            'stagiaire' => $stagiaire,
-        ]);
-    }
-
     #[Route('/stagiaire/new', name: 'new_stagiaire')]
     public function new(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager):Response
     {
@@ -56,4 +48,27 @@ class StagiaireController extends AbstractController
             'edit' => $stagiaire->getId(),
         ]);    
     }
+
+    #[Route('/stagiaire/{id}/delete', name: 'delete_stagiaire')]
+    public function delete(stagiaire $stagiaire, EntityManagerInterface $entityManager){
+        
+        $listSessions = $stagiaire->getSessions();
+        foreach($listSessions as $session){
+            $session->removeStagiaire($stagiaire);
+        }
+        $entityManager->remove($stagiaire);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_stagiaire');
+    }
+
+    #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
+    public function show(Stagiaire $stagiaire): Response
+    {
+        return $this->render('stagiaire/show.html.twig', [
+            'stagiaire' => $stagiaire,
+        ]);
+    }
+
 }

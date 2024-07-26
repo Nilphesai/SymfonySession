@@ -6,6 +6,7 @@
     <h1> Detail session</h1>
     
         <h2>{{session.formation}}</h2>
+        <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
         <p>
             Formateur : {{session.formateur}}<br>
             Début de la session : {{session.dateDebut|date('d-m-Y')}}<br>

@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1> Detail Stagiaire</h1>
-    
+        <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}"> Supprimer </a> 
+
+        
         <h2>{{stagiaire}}</h2>
         <p>
             

@@ -24,7 +24,9 @@
             <td>{{session.nbPlace}}</td>
             <td>{{session.stagiaires.count() }}</td>
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
-            <td><a href="{{ path('show_session', {'id': session.id}) }}">detail</a></td>
+            <td><a href="{{ path('show_session', {'id': session.id}) }}">detail</a> 
+                <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
+            </td>
         </tr>
         {% endfor %}
 

@@ -153,6 +153,27 @@ class SessionController extends AbstractController
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
     }
 
+    #[Route('/session/{id}/delete', name: 'delete_session')]
+    public function delete(Session $session, EntityManagerInterface $entityManager){
+        
+        $listStagiaires = $session->getStagiaires();
+        $listProgrammes = $session->getProgrammes();
+        foreach($listStagiaires as $stagiaire){
+            $stagiaire->removeSession($session);
+        }
+        foreach($listProgrammes as $programme){
+            $module = $programme->getModule();
+            $module->removeProgramme($programme);
+            $session->removeProgramme($programme);
+            $entityManager->remove($programme);
+        }
+        $entityManager->remove($session);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_session');
+    }
+
     #[Route('/session/{id}', name: 'show_session')]
     public function show(Session $session = null, SessionRepository $sr): Response
     {
