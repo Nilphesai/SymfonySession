@@ -13,4 +13,10 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig',[]);
     }
+
+    #[Route('/home/{id}', name: 'app_adminPanel')]
+    public function adminPanel(): Response
+    {
+        return $this->render('home/adminPanel.html.twig',[]);
+    }
 }

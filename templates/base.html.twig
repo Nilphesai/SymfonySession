@@ -21,7 +21,7 @@
         <a href="{{ path('app_session') }}">liste session</a>
         <a href="{{ path('app_stagiaire') }}">liste stagiaire</a>
         {% if is_granted("ROLE_ADMIN") %}
-            <a href="">Panneau d'administration</a>
+            <a href="{{path('app_adminPanel', {'id': app.user.id})}}">Panneau d'administration</a>
         {% endif %}
 
         
