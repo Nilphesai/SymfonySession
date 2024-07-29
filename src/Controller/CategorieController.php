@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Form\CategorieType;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'app_categorie')]
-    public function index(): Response
+    public function index(CategorieRepository $categorieRepository): Response
     {
+        $categories = $categorieRepository->findAll();
         return $this->render('categorie/index.html.twig', [
-            'controller_name' => 'CategorieController',
+            'categories' => $categories
         ]);
     }
 

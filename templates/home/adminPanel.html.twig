@@ -7,7 +7,7 @@
 <h1>panneau de configuration</h1>
 <table>
 
-    <h2>liste des Formations</h2>
+    <h2><a href="{{ path('app_formation') }}">liste des Formations</a></h2>
     
     <tr>
         <th>Nom</th>
@@ -23,7 +23,7 @@
 
 <table>
 
-    <h2>liste des Modules</h2>
+    <h2><a href="{{ path('app_module') }}">liste des Modules</a></h2>
     
     <tr>
         <th>Nom</th>
@@ -42,7 +42,7 @@
 
 <table>
 
-    <h2>liste des Catégorie</h2>
+    <h2><a href="{{ path('app_categorie') }}">liste des Catégorie</a></h2>
     
     <tr>
         <th>Nom</th>
@@ -59,15 +59,17 @@
 
 <table>
 
-    <h2>liste des Formateurs</h2>
+    <h2><a href="{{ path('app_formateur') }}">liste des Formateurs</a></h2>
     
     <tr>
         <th>Nom</th>
+        <th>option</th>
     </tr>
     
     {% for formateur in formateurs %}
     <tr>
         <td>{{formateur.nom}}</td>
+        <td><a href="{{ path('delete_formateur', {'id': formateur.id}) }}"> Supprimer </a></td>
     </tr>
     {% endfor %}
     <a href="{{ path('new_formateur') }}">Nouveau formateur</a></br>

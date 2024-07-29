@@ -188,6 +188,10 @@ class SessionController extends AbstractController
             $session->removeProgramme($programme);
             $entityManager->remove($programme);
         }
+        $formateur = $session->getFormateur();
+        $formateur->removeSession($session);
+        $formation = $session->getFormation();
+        $formation->removeSession($session);
         $entityManager->remove($session);
         //execute PDO
         $entityManager->flush();

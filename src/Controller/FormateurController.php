@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Formateur;
 use App\Form\FormateurType;
+use App\Repository\FormateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FormateurController extends AbstractController
 {
     #[Route('/formateur', name: 'app_formateur')]
-    public function index(): Response
+    public function index(FormateurRepository $formateurRepository): Response
     {
+        $formateurs = $formateurRepository->findAll();
         return $this->render('formateur/index.html.twig', [
-            'controller_name' => 'FormateurController',
+            'formateurs' => $formateurs,
         ]);
     }
 
@@ -44,5 +46,28 @@ class FormateurController extends AbstractController
             'formAddFormateur' => $form,
             'edit' => $formateur->getId(),
         ]);    
+    }
+
+    #[Route('/formateur/{id}/delete', name: 'delete_formateur')]
+    public function delete(Formateur $formateur, EntityManagerInterface $entityManager){
+        
+        $listSessions = $formateur->getSessions();
+        //var_dump($listSessions);die;
+        $list = "";
+
+        if(isset($listSessions)){
+            foreach($listSessions as $session){
+                $list = $list." ".$session." </br>";
+            }
+            $this->addFlash('error', 'veuillez changer le formateurs des sessions :</br>'.$list.' avant de continuer');
+            return $this->redirectToRoute("app_session");
+        }
+        else{
+        $entityManager->remove($formateur);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+        }
     }
 }

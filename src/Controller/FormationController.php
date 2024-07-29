@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Formation;
 use App\Form\FormationType;
+use App\Repository\FormationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FormationController extends AbstractController
 {
     #[Route('/formation', name: 'app_formation')]
-    public function index(): Response
+    public function index(FormationRepository $formationRepository): Response
     {
+        $formations = $formationRepository->findAll();
         return $this->render('formation/index.html.twig', [
-            'controller_name' => 'FormationController',
+            'formations' => $formations,
         ]);
     }
 
