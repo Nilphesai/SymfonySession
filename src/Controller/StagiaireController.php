@@ -24,6 +24,7 @@ class StagiaireController extends AbstractController
     }
 
     #[Route('/stagiaire/new', name: 'new_stagiaire')]
+    #[Route('/stagiaire/{id}/edit', name: 'edit_stagiaire')]
     public function new(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager):Response
     {
         if(!$stagiaire){

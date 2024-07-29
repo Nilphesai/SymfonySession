@@ -22,7 +22,10 @@
             <td>{{stagiaire.dateNaissance|date('d-m-Y')}}</td>
             <td>{{stagiaire.email}}</td>
             <td>{{stagiaire.telephone}}</td>
-            <td><a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}"> Supprimer </a> </td>
+            <td>
+                <a href="{{ path("edit_stagiaire", {'id':stagiaire.id}) }}">Edit</a>
+                <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}"> Supprimer </a>
+            </td>
         </tr>
         {% endfor %}
 

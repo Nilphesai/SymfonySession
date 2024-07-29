@@ -33,6 +33,7 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/new', name: 'new_session')]
+    #[Route('/session/{id}/edit', name: 'edit_session')]
     public function new(Session $session = null, Request $request, EntityManagerInterface $entityManager):Response
     {
         if(!$session){
