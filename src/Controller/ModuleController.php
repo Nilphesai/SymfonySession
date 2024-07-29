@@ -47,4 +47,30 @@ class ModuleController extends AbstractController
             'edit' => $module->getId(),
         ]);    
     }
+
+    #[Route('/module/{id}/delete', name: 'delete_module')]
+    public function delete(Module $module, EntityManagerInterface $entityManager){
+        
+        $listProgrammes = $module->getProgrammes();
+        $list = "";
+        
+        //si $listProgrammes n'a pas de Programmes
+        if(sizeof($listProgrammes) != 0){
+            foreach($listProgrammes as $programme){
+                $list = $list." ".$programme->getSession()." </br>";
+            }
+            $this->addFlash('error', 'veuillez enlever le module des sessions :</br>'.$list.' avant de continuer');
+            return $this->redirectToRoute("app_session");
+        }
+        else{
+        $categorie = $module->getCategorie();
+        $categorie->removeModule($module);
+        $entityManager->remove($module);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+        }
+    }
+
 }

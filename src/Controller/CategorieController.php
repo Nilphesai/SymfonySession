@@ -47,4 +47,27 @@ class CategorieController extends AbstractController
             'edit' => $categorie->getId(),
         ]);    
     }
+
+    #[Route('/categorie/{id}/delete', name: 'delete_categorie')]
+    public function delete(Categorie $categorie, EntityManagerInterface $entityManager){
+        
+        $listModules = $categorie->getModules();
+        
+        $list = "";
+        //si $listModules n'a pas de session
+        if(sizeof($listModules) != 0){
+            foreach($listModules as $module){
+                $list = $list." ".$module." </br>";
+            }
+            $this->addFlash('error', 'veuillez changer la catégorie des Modules :</br>'.$list.' avant de continuer');
+            return $this->redirectToRoute("app_session");
+        }
+        else{
+        $entityManager->remove($categorie);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+        }
+    }
 }
