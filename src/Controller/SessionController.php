@@ -22,9 +22,13 @@ class SessionController extends AbstractController
     #[Route('/session', name: 'app_session')]
     public function index(SessionRepository $sessionRepository): Response
     {
-        $sessions = $sessionRepository->findAll(); 
+        $sessions = $sessionRepository->findSessions();
+        $sessionsFini = $sessionRepository->findSessionsFini();
+        $sessionsFuture = $sessionRepository->findSessionsFuture();
         return $this->render('session/index.html.twig', [
             'sessions' => $sessions,
+            'sessionsFini' => $sessionsFini,
+            'sessionsFuture' => $sessionsFuture,
         ]);
     }
 
@@ -137,7 +141,6 @@ class SessionController extends AbstractController
         }
         else{
             $this->addFlash('error', 'nbJours dépasse la durée de la session !');
-            //var_dump(flasher()->warning('le nombre de jours demandé pour le module dépasse la durée de la session'));die;
             return $this->redirectToRoute("show_session", ['id' => $sessId]);
         }
         return $this->redirectToRoute("show_session", ['id' => $sessId]);

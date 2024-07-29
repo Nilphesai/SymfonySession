@@ -6,6 +6,7 @@
     <h1> Liste des sessions</h1>
     <a href="{{path('new_session')}}" class="btn btn-success">Ajouter une Session</a>
     <table>
+        <h2>Session en cours</h2>
         <tr>
             <th>Intitulé Session</th>
             <th>date début</th>
@@ -26,6 +27,62 @@
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
             <td>
                 <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <table>
+        <h2>Session Prévu</h2>
+        <tr>
+            <th>Intitulé Session</th>
+            <th>date début</th>
+            <th>date de fin</th>
+            <th>nombre place théorique</th>
+            <th>nombre place réservé</th>
+            <th>nombre place restante</th>
+            <th>option</th>
+        </tr>
+        
+        {% for sessionFuture in sessionsFuture %}
+        <tr>
+            <td><a href="{{ path('show_session', {'id': sessionFuture.id}) }}">{{sessionFuture}}</a></td>
+            <td>{{sessionFuture.dateDebut|date('d-m-Y')}}</td>
+            <td>{{sessionFuture.dateFin|date('d-m-Y')}}</td>
+            <td>{{sessionFuture.nbPlace}}</td>
+            <td>{{sessionFuture.stagiaires.count() }}</td>
+            <td>{{sessionFuture.nbPlace - sessionFuture.stagiaires.count()}}</td>
+            <td>
+                <a href="{{ path('delete_session', {'id': sessionFuture.id}) }}"> Supprimer </a> 
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    
+    <table>
+        <h2>Session Passé</h2>
+        <tr>
+            <th>Intitulé Session</th>
+            <th>date début</th>
+            <th>date de fin</th>
+            <th>nombre place théorique</th>
+            <th>nombre place réservé</th>
+            <th>nombre place restante</th>
+            <th>option</th>
+        </tr>
+        
+        {% for sessionfini in sessionsFini %}
+        <tr>
+            <td><a href="{{ path('show_session', {'id': sessionfini.id}) }}">{{sessionfini}}</a></td>
+            <td>{{sessionfini.dateDebut|date('d-m-Y')}}</td>
+            <td>{{sessionfini.dateFin|date('d-m-Y')}}</td>
+            <td>{{sessionfini.nbPlace}}</td>
+            <td>{{sessionfini.stagiaires.count() }}</td>
+            <td>{{sessionfini.nbPlace - sessionfini.stagiaires.count()}}</td>
+            <td>
+                <a href="{{ path('delete_session', {'id': sessionfini.id}) }}"> Supprimer </a> 
             </td>
         </tr>
         {% endfor %}

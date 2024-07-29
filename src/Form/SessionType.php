@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class SessionType extends AbstractType
 {
@@ -26,7 +27,11 @@ class SessionType extends AbstractType
             ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
             ])
-            ->add('nbPlace')
+            ->add('nbPlace', IntegerType::class, [
+                'attr' => [
+                    'min' => 1
+                ],
+            ])
             ->add('formateur', EntityType::class, [
                 'class' => Formateur::class,
                 'choice_label' => 'nom',

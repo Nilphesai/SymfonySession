@@ -93,4 +93,56 @@ class SessionRepository extends ServiceEntityRepository
         $query = $sub->getQuery();
         return $query->getResult();
     }
+
+    public function findSessionsFini(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+        $date = date('Y-m-d');
+
+        $qb = $sub;
+        // sélectionner tous les programme d'une session dont l'id est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Session', 's')
+            ->where('s.dateFin < :date')
+            ->setParameter('date', $date);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findSessionsFuture(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+        $date = date('Y-m-d');
+
+        $qb = $sub;
+        // sélectionner tous les programme d'une session dont l'id est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Session', 's')
+            ->where('s.dateDebut > :date')
+            ->setParameter('date', $date);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findSessions(){
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+        $date = date('Y-m-d');
+
+        $qb = $sub;
+        // sélectionner tous les programme d'une session dont l'id est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Session', 's')
+            ->where('s.dateDebut <= :date ')
+            ->andwhere(' s.dateFin >= :date')
+            ->setParameter('date', $date);
+
+        // renvoyer le résultat
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }
