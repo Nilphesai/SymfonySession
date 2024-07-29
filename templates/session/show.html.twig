@@ -5,7 +5,7 @@
 {% block body %}
     <h1> Detail session</h1>
     
-        <h2>{{session.formation}}</h2>
+        <h2>{{session.intitule}}</h2>
         <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
         <p>
             Formateur : {{session.formateur}}<br>
@@ -19,23 +19,29 @@
             {% for inscrit in session.stagiaires %}
             <a href="{{ path('show_stagiaire', {'id': inscrit.id}) }}">{{inscrit}}</a> <a href="{{ path('remove_session_stagiaire', {'id': inscrit.id, 'sessionId': session.id}) }}">enlever</a></br>
             {% endfor %}
-        <h2>liste non-inscrit</h2>
+        {% if session.stagiaires|length <  session.nbPlace %}
+            <h2>liste non-inscrit</h2>
             {% for nonInscrit in nonInscrits %}
             <a href="{{ path('show_stagiaire', {'id': nonInscrit.id}) }}">{{nonInscrit}}</a> <a href="{{ path('add_session_stagiaire', {'id': nonInscrit.id, 'sessionId': session.id}) }}">ajouter</a></br>
             {% endfor %}
+        {% endif %}
         <h2>liste module</h2>
+        <p>la session dure {{ session.dureeSession() }} jours</p> </br>
             {% for programme in session.programmes %}
              {{programme.module}} {{programme.nbJours}}J <a href="{{ path('remove_session_programme', {'progId': programme.id, 'modId': programme.module.id , 'sessionId': session.id}) }}"> enlever </a> </br>
             {% endfor %}
-        
+
         <h2>liste modules à ajouter</h2>
-        
+                {% for row in app.flashes('error') %}
+                    {{row}}
+                {% endfor %}
+            
             {% for nonModule in nonProgrammes %}
                 {{nonModule}} 
-                <form method="POST" action="{{path('add_session_programme', {'modId': nonModule.id , 'sessionId': session.id}) }}">
-                nombre de jours : <input type="number" min='0' max="20" value="1" name="nbJours">
+                <form method="GET" action="{{path('add_session_programme', {'modId': nonModule.id , 'sessionId': session.id}) }}">
+                nombre de jours : <input type="number" min='1' max="20" value="1" name="nbJours">
                 <input type="submit" name="submit" value="Ajouter"></br>
                 </form>
             {% endfor %}
-            
+        
 {% endblock %}

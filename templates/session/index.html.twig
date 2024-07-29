@@ -13,18 +13,18 @@
             <th>nombre place théorique</th>
             <th>nombre place réservé</th>
             <th>nombre place restante</th>
-            <th>détail Session</th>
+            <th>option</th>
         </tr>
         
         {% for session in sessions %}
         <tr>
-            <td>{{session}}</td>
+            <td><a href="{{ path('show_session', {'id': session.id}) }}">{{session}}</a></td>
             <td>{{session.dateDebut|date('d-m-Y')}}</td>
             <td>{{session.dateFin|date('d-m-Y')}}</td>
             <td>{{session.nbPlace}}</td>
             <td>{{session.stagiaires.count() }}</td>
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
-            <td><a href="{{ path('show_session', {'id': session.id}) }}">detail</a> 
+            <td>
                 <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
             </td>
         </tr>

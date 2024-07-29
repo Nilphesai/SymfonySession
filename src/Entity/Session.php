@@ -185,6 +185,13 @@ class Session
         return $this;
     }
 
+    public function dureeSession(): ?string
+    {
+        $dureeSession = date_diff($this->getDateDebut(), $this->getDateFin());
+        $duree = $dureeSession->format('%d');
+        return $duree;
+    }
+
     public function __toString(){
         return $this->intitule;
     }

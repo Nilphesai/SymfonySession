@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Module;
 use App\Entity\Session;
 use App\Entity\Programme;
@@ -10,6 +11,7 @@ use App\Form\SessionType;
 use App\Form\ProgrammeType;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Flasher\Prime\FlasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -108,17 +110,15 @@ class SessionController extends AbstractController
         $module = $entityManager->getRepository(Module::class)->find($modId);
         $session = $entityManager->getRepository(Session::class)->find($sessId);
         
-        $dureeSession = date_diff($session->getDateDebut(), $session->getDateFin());
-        $duree = $dureeSession->format('%d');
-        
         //vérification nbJours non dépassé
+        $duree = $session->dureeSession();
         $temps = 0;
-        $myNumber = $_POST['nbJours'];
+        $myNumber = $_GET['nbJours'];
         $listProgrammes = $session->getProgrammes();
         foreach($listProgrammes as $programme){
             $temps = $temps + $programme->getNbJours(); 
         }
-        if ($duree > $temps + $myNumber){
+        if ($duree >= $temps + $myNumber){
             
             
             $programme = new Programme();
@@ -134,6 +134,11 @@ class SessionController extends AbstractController
             $entityManager->flush();
 
             
+        }
+        else{
+            $this->addFlash('error', 'nbJours dépasse la durée de la session !');
+            //var_dump(flasher()->warning('le nombre de jours demandé pour le module dépasse la durée de la session'));die;
+            return $this->redirectToRoute("show_session", ['id' => $sessId]);
         }
         return $this->redirectToRoute("show_session", ['id' => $sessId]);
 
