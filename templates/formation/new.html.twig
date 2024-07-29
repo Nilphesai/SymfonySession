@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationController!{% endblock %}
+
+{% block body %}
+
+    <h1> Ajouter une session</h1>
+    
+    {#{{ form(formAddSession)}}#}
+    {{ form_start(formAddFormation) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(formAddFormation.nom)}}
+        </div>
+    </div>
+        {{ form_row(formAddFormation.valider)}}
+    {{ form_end(formAddFormation) }}
+{% endblock %}

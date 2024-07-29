@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurController!{% endblock %}
+
+{% block body %}
+
+    <h1> Ajouter un formateur</h1>
+    
+    {#{{ form(formAddSession)}}#}
+    {{ form_start(formAddFormateur) }}
+    <div class="row">
+        <div class="col-sm">
+            {{ form_row(formAddFormateur.nom)}}
+        </div>
+    </div>
+        {{ form_row(formAddFormateur.valider)}}
+    {{ form_end(formAddFormateur) }}
+{% endblock %}

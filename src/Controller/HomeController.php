@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ModuleRepository;
+use App\Repository\CategorieRepository;
+use App\Repository\FormateurRepository;
+use App\Repository\FormationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -15,8 +19,17 @@ class HomeController extends AbstractController
     }
 
     #[Route('/home/{id}', name: 'app_adminPanel')]
-    public function adminPanel(): Response
+    public function adminPanel(FormateurRepository $formateurRepository, FormationRepository $formationRepository, ModuleRepository $moduleRepository, CategorieRepository $categorieRepository): Response
     {
-        return $this->render('home/adminPanel.html.twig',[]);
+        $formateurs = $formateurRepository->findAll();
+        $formations = $formationRepository->findAll();
+        $modules = $moduleRepository->findAll();
+        $categories = $categorieRepository->findAll();
+        return $this->render('home/adminPanel.html.twig', [
+            'formateurs' => $formateurs,
+            'formations' => $formations,
+            'modules' => $modules,
+            'categories' => $categories
+        ]);
     }
 }

@@ -5,7 +5,74 @@
 {% block body %}
 
 <h1>panneau de configuration</h1>
+<table>
 
+    <h2>liste des Formations</h2>
+    
+    <tr>
+        <th>Nom</th>
+    </tr>
+    
+    {% for formation in formations %}
+    <tr>
+        <td>{{formation.nom}}</td>
+    </tr>
+    {% endfor %}
+    <a href="{{ path('new_formation') }}">Nouvelle formation</a></br>
+</table>
+
+<table>
+
+    <h2>liste des Modules</h2>
+    
+    <tr>
+        <th>Nom</th>
+        <th>Categorie</th>
+    </tr>
+    
+    {% for module in modules %}
+    <tr>
+        <td>{{module.libelle}}</td>
+        <td>{{module.categorie}}</td>
+    </tr>
+    {% endfor %}
+    <a href="{{ path('new_module') }}">Nouveau module</a></br>
+
+</table>
+
+<table>
+
+    <h2>liste des Catégorie</h2>
+    
+    <tr>
+        <th>Nom</th>
+    </tr>
+    
+    {% for categorie in categories %}
+    <tr>
+        <td>{{categorie.nom}}</td>
+    </tr>
+    {% endfor %}
+    <a href="{{ path('new_categorie') }}">Nouvelle catégorie</a></br>
+
+</table>
+
+<table>
+
+    <h2>liste des Formateurs</h2>
+    
+    <tr>
+        <th>Nom</th>
+    </tr>
+    
+    {% for formateur in formateurs %}
+    <tr>
+        <td>{{formateur.nom}}</td>
+    </tr>
+    {% endfor %}
+    <a href="{{ path('new_formateur') }}">Nouveau formateur</a></br>
+
+</table>
 
 
 {% endblock %}
