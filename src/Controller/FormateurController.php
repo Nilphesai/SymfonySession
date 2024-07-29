@@ -52,10 +52,10 @@ class FormateurController extends AbstractController
     public function delete(Formateur $formateur, EntityManagerInterface $entityManager){
         
         $listSessions = $formateur->getSessions();
-        //var_dump($listSessions);die;
+        //var_dump(sizeof($listSessions));die;
         $list = "";
-
-        if(isset($listSessions)){
+        //si $listSessions n'a pas de session
+        if(sizeof($listSessions) != 0){
             foreach($listSessions as $session){
                 $list = $list." ".$session." </br>";
             }
