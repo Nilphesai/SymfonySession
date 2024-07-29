@@ -48,4 +48,27 @@ class FormationController extends AbstractController
             'edit' => $formation->getId(),
         ]);    
     }
+
+    #[Route('/formation/{id}/delete', name: 'delete_formation')]
+    public function delete(Formation $formation, EntityManagerInterface $entityManager){
+        
+        $listSessions = $formation->getSessions();
+        //var_dump(sizeof($listSessions));die;
+        $list = "";
+        //si $listSessions n'a pas de session
+        if(sizeof($listSessions) != 0){
+            foreach($listSessions as $session){
+                $list = $list." ".$session." </br>";
+            }
+            $this->addFlash('error', 'veuillez changer la formation des sessions :</br>'.$list.' avant de continuer');
+            return $this->redirectToRoute("app_session");
+        }
+        else{
+        $entityManager->remove($formation);
+        //execute PDO
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_home');
+        }
+    }
 }

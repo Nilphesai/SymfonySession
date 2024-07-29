@@ -11,11 +11,13 @@
     
     <tr>
         <th>Nom</th>
+        <th>option</th>
     </tr>
     
     {% for formation in formations %}
     <tr>
         <td>{{formation.nom}}</td>
+        <td><a href="{{ path('delete_formation', {'id': formation.id}) }}"> Supprimer </a></td>
     </tr>
     {% endfor %}
     <a href="{{ path('new_formation') }}">Nouvelle formation</a></br>
