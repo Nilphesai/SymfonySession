@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormateurController!{% endblock %}
+
+{% block body %}
+    <h1> Detail Formateur</h1>
+    <h2> supprimer le formateur</h2>
+    {% if formateur.sessions|length > 0 %}
+        <p> pour supprimer le formateur, il faut que ne gère aucune session</p>
+    {% else %}
+    <a href="{{ path('delete_formateur', {'id': formateur.id}) }}"> Supprimer </a> 
+    {% endif %}
+        
+        <h2>{{formateur}}</h2>
+        
+        <h3>liste session géré</h3>
+            {% for session in formateur.sessions %}
+            <a href="{{ path('show_session', {'id': session.id}) }}">{{session}} </br>
+            {% endfor %}
+            
+{% endblock %}

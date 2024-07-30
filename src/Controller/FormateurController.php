@@ -52,7 +52,6 @@ class FormateurController extends AbstractController
     public function delete(Formateur $formateur, EntityManagerInterface $entityManager){
         
         $listSessions = $formateur->getSessions();
-        //var_dump(sizeof($listSessions));die;
         $list = "";
         //si $listSessions n'a pas de session
         if(sizeof($listSessions) != 0){
@@ -60,7 +59,7 @@ class FormateurController extends AbstractController
                 $list = $list." ".$session." </br>";
             }
             $this->addFlash('error', 'veuillez changer le formateurs des sessions :</br>'.$list.' avant de continuer');
-            return $this->redirectToRoute("app_session");
+            return $this->redirectToRoute("show_formateur", ['id' => $formateur->getId()]);
         }
         else{
         $entityManager->remove($formateur);
@@ -69,5 +68,13 @@ class FormateurController extends AbstractController
 
         return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/formateur/{id}', name: 'show_formateur')]
+    public function show(Formateur $formateur): Response
+    {
+        return $this->render('formateur/show.html.twig', [
+            'formateur' => $formateur,
+        ]);
     }
 }

@@ -53,7 +53,6 @@ class FormationController extends AbstractController
     public function delete(Formation $formation, EntityManagerInterface $entityManager){
         
         $listSessions = $formation->getSessions();
-        //var_dump(sizeof($listSessions));die;
         $list = "";
         //si $listSessions n'a pas de session
         if(sizeof($listSessions) != 0){
@@ -61,7 +60,7 @@ class FormationController extends AbstractController
                 $list = $list." ".$session." </br>";
             }
             $this->addFlash('error', 'veuillez changer la formation des sessions :</br>'.$list.' avant de continuer');
-            return $this->redirectToRoute("app_session");
+            return $this->redirectToRoute("show_formation", ['id' => $formation->getId()]);
         }
         else{
         $entityManager->remove($formation);
@@ -70,5 +69,13 @@ class FormationController extends AbstractController
 
         return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/formation/{id}', name: 'show_formation')]
+    public function show(Formation $formation): Response
+    {
+        return $this->render('formation/show.html.twig', [
+            'formation' => $formation,
+        ]);
     }
 }

@@ -12,12 +12,15 @@
     <tr>
         <th>Nom</th>
         <th>Categorie</th>
+        <th>Option</th>
     </tr>
     
     {% for module in modules %}
     <tr>
-        <td>{{module.libelle}}</td>
-        <td>{{module.categorie}}</td>
+        <td><a href="{{ path('show_module', {'id': module.id}) }}">{{module.libelle}}</a></td>
+        <td><a href="{{ path('show_categorie', {'id': module.categorie.id}) }}"></a>{{module.categorie}}</td>
+        <td><a href="{{ path('delete_module', {'id': module.id}) }}"> Supprimer </a></td>
+
     </tr>
     {% endfor %}
     

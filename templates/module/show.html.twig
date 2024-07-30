@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ModuleController!{% endblock %}
+
+{% block body %}
+    <h1> Detail Module</h1>
+        
+    <h2> supprimer le module</h2>
+    {% if module.programmes|length > 0 %}
+        <p> pour supprimer le module, il faut qu'il n'ai aucune session liée</p>
+    {% else %}
+    <a href="{{ path('delete_module', {'id': module.id}) }}"> Supprimer </a>
+    {% endif %}
+      
+        <h2>{{module}}</h2>
+        catégorie : <a href="{{ path('show_categorie', {'id': module.categorie.id}) }}">{{module.categorie}}</a>
+        <h3>liste session liée</h3>
+            {% for programme in module.programmes %}
+            <a href="{{ path('show_session', {'id': programme.session.id}) }}">{{programme.session}} </br>
+            {% endfor %}
+            
+{% endblock %}

@@ -60,7 +60,7 @@ class ModuleController extends AbstractController
                 $list = $list." ".$programme->getSession()." </br>";
             }
             $this->addFlash('error', 'veuillez enlever le module des sessions :</br>'.$list.' avant de continuer');
-            return $this->redirectToRoute("app_session");
+            return $this->redirectToRoute("show_module", ['id' => $module->getId()]);
         }
         else{
         $categorie = $module->getCategorie();
@@ -71,6 +71,14 @@ class ModuleController extends AbstractController
 
         return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/module/{id}', name: 'show_module')]
+    public function show(Module $module): Response
+    {
+        return $this->render('module/show.html.twig', [
+            'module' => $module,
+        ]);
     }
 
 }

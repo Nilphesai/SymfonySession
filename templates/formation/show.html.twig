@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationController!{% endblock %}
+
+{% block body %}
+    <h1> Detail Formation</h1>
+        
+    <h2> supprimer le formateur</h2>
+    {% if formation.sessions|length > 0 %}
+        <p> pour supprimer la formation, il faut qu'il n'ai aucune session liée</p>
+    {% else %}
+    <a href="{{ path('delete_formation', {'id': formation.id}) }}"> Supprimer </a>
+    {% endif %}
+      
+        <h2>{{formation}}</h2>
+        
+        <h3>liste session liée</h3>
+            {% for session in formation.sessions %}
+            <a href="{{ path('show_session', {'id': session.id}) }}">{{session}} </br>
+            {% endfor %}
+            
+{% endblock %}

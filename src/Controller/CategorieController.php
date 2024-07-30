@@ -54,13 +54,13 @@ class CategorieController extends AbstractController
         $listModules = $categorie->getModules();
         
         $list = "";
-        //si $listModules n'a pas de session
+        //si $listModules n'a pas de module
         if(sizeof($listModules) != 0){
             foreach($listModules as $module){
                 $list = $list." ".$module." </br>";
             }
             $this->addFlash('error', 'veuillez changer la catégorie des Modules :</br>'.$list.' avant de continuer');
-            return $this->redirectToRoute("app_session");
+            return $this->redirectToRoute("show_categorie", ['id' => $categorie->getId()]);
         }
         else{
         $entityManager->remove($categorie);
@@ -69,5 +69,13 @@ class CategorieController extends AbstractController
 
         return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/categorie/{id}', name: 'show_categorie')]
+    public function show(Categorie $categorie): Response
+    {
+        return $this->render('categorie/show.html.twig', [
+            'categorie' => $categorie,
+        ]);
     }
 }

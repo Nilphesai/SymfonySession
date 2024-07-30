@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategorieController!{% endblock %}
+
+{% block body %}
+    <h1> Detail Categorie</h1>
+        <a href="{{ path('delete_categorie', {'id': categorie.id}) }}"> Supprimer </a> 
+
+        
+        <h2>{{categorie}}</h2>
+        
+        <h3>liste modules</h3>
+            {% for module in categorie.modules %}
+            <a href="{{ path('show_module', {'id': module.id}) }}">{{module}}</a>
+            <a href="{{ path('delete_module', {'id': module.id}) }}"> Supprimer </a></br>
+            {% endfor %}
+            
+{% endblock %}

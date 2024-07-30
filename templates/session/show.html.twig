@@ -8,7 +8,7 @@
         <h2>{{session.intitule}}</h2>
         <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
         <p>
-            Formateur : {{session.formateur}}<br>
+            Formateur : <a href="{{ path('show_formateur', {'id': session.formateur.id}) }}">{{session.formateur}}</a><br>
             Début de la session : {{session.dateDebut|date('d-m-Y')}}<br>
             Fin de la session : {{session.dateFin|date('d-m-Y')}}<br>
             place disponible : {{session.nbPlace}}
