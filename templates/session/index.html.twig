@@ -4,7 +4,10 @@
 
 {% block body %}
     <h1> Liste des sessions</h1>
+    {% if is_granted("ROLE_ADMIN") %}
     <a href="{{path('new_session')}}" class="btn btn-success">Ajouter une Session</a>
+    {% endif %}
+    
     <table>
         <h2>Session en cours</h2>
         <tr>
@@ -16,6 +19,7 @@
             <th>nombre place restante</th>
             <th>option</th>
         </tr>
+
         
         {% for session in sessions %}
         <tr>
@@ -26,8 +30,12 @@
             <td>{{session.stagiaires.count() }}</td>
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
             <td>
+                {% if is_granted("ROLE_ADMIN") %}
                 <a href="{{ path("edit_session", {'id':session.id}) }}">Edit</a>
                 <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
+                {% else %}
+                 X
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
@@ -55,8 +63,12 @@
             <td>{{sessionFuture.stagiaires.count() }}</td>
             <td>{{sessionFuture.nbPlace - sessionFuture.stagiaires.count()}}</td>
             <td>
+                {% if is_granted("ROLE_ADMIN") %}
                 <a href="{{ path("edit_session", {'id':sessionFuture.id}) }}">Edit</a>
                 <a href="{{ path('delete_session', {'id': sessionFuture.id}) }}"> Supprimer </a> 
+                {% else %}
+                 X
+                {% endif %}            
             </td>
         </tr>
         {% endfor %}
@@ -84,7 +96,12 @@
             <td>{{sessionfini.stagiaires.count() }}</td>
             <td>{{sessionfini.nbPlace - sessionfini.stagiaires.count()}}</td>
             <td>
-                <a href="{{ path('delete_session', {'id': sessionfini.id}) }}"> Supprimer </a> 
+                {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path("edit_session", {'id':sessionFini.id}) }}">Edit</a>
+                <a href="{{ path('delete_session', {'id': sessionFini.id}) }}"> Supprimer </a> 
+                {% else %}
+                 X
+                {% endif %}            
             </td>
         </tr>
         {% endfor %}

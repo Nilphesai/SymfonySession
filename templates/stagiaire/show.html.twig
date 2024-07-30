@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1> Detail Stagiaire</h1>
-        <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}"> Supprimer </a> 
+        {% if is_granted("ROLE_ADMIN") %}
+            <a href="{{ path('delete_stagiaire', {'id': stagiaire.id}) }}"> Supprimer </a> 
+        {% endif %}  
 
         
         <h2>{{stagiaire}}</h2>
@@ -18,7 +20,9 @@
         <h2>liste Session inscrit</h2>
             {% for session in stagiaire.sessions %}
             <a href="{{ path('show_session', {'id': session.id}) }}"> {{session}} </a> 
-            <a href="{{ path('remove_stagiaire_session', {'id': stagiaire.id, 'sessionId': session.id}) }}"> désinscrire </a></br>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('remove_stagiaire_session', {'id': stagiaire.id, 'sessionId': session.id}) }}"> désinscrire </a>
+                {% endif %}</br>
             {% endfor %}
             
 {% endblock %}
