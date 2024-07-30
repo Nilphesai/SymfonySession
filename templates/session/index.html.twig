@@ -7,10 +7,10 @@
     {% if is_granted("ROLE_ADMIN") %}
     <a href="{{path('new_session')}}" class="btn btn-success">Ajouter une Session</a>
     {% endif %}
-    
-    <table>
+
+    <table class="table table-primary">
         <h2>Session en cours</h2>
-        <tr>
+        <tr class="table-primary">
             <th>Intitulé Session</th>
             <th>date début</th>
             <th>date de fin</th>
@@ -31,8 +31,8 @@
             <td>{{session.nbPlace - session.stagiaires.count()}}</td>
             <td>
                 {% if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path("edit_session", {'id':session.id}) }}">Edit</a>
-                <a href="{{ path('delete_session', {'id': session.id}) }}"> Supprimer </a> 
+                <a href="{{ path("edit_session", {'id':session.id}) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ path('delete_session', {'id': session.id}) }}" class="btn btn-danger"> Supprimer </a> 
                 {% else %}
                  X
                 {% endif %}
@@ -42,9 +42,9 @@
 
     </table>
 
-    <table>
+    <table class="table table-primary">
         <h2>Session Prévu</h2>
-        <tr>
+        <tr class="table-primary">
             <th>Intitulé Session</th>
             <th>date début</th>
             <th>date de fin</th>
@@ -64,8 +64,8 @@
             <td>{{sessionFuture.nbPlace - sessionFuture.stagiaires.count()}}</td>
             <td>
                 {% if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path("edit_session", {'id':sessionFuture.id}) }}">Edit</a>
-                <a href="{{ path('delete_session', {'id': sessionFuture.id}) }}"> Supprimer </a> 
+                <a href="{{ path("edit_session", {'id':sessionFuture.id}) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ path('delete_session', {'id': sessionFuture.id}) }}" class="btn btn-danger"> Supprimer </a> 
                 {% else %}
                  X
                 {% endif %}            
@@ -75,9 +75,9 @@
 
     </table>
     
-    <table>
+    <table class="table table-primary">
         <h2>Session Passé</h2>
-        <tr>
+        <tr class="table-primary">
             <th>Intitulé Session</th>
             <th>date début</th>
             <th>date de fin</th>
@@ -97,8 +97,8 @@
             <td>{{sessionfini.nbPlace - sessionfini.stagiaires.count()}}</td>
             <td>
                 {% if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path("edit_session", {'id':sessionFini.id}) }}">Edit</a>
-                <a href="{{ path('delete_session', {'id': sessionFini.id}) }}"> Supprimer </a> 
+                <a href="{{ path("edit_session", {'id':sessionfini.id}) }}" class="btn btn-warning">Edit</a>
+                <a href="{{ path('delete_session', {'id': sessionfini.id}) }}" class="btn btn-danger"> Supprimer </a> 
                 {% else %}
                  X
                 {% endif %}            

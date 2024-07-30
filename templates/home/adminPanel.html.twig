@@ -3,84 +3,99 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+<div class="container text-center">
+    <h1>panneau de configuration</h1>
+    <div class="row">
+        <div class="col">
+        
+        <table class="table table-sm">
 
-<h1>panneau de configuration</h1>
-<table>
+            <h2><a href="{{ path('app_formation') }}">liste des Formations</a></h2>
+            
+            <tr>
+                <th>Nom</th>
+                <th>option</th>
+            </tr>
+            
+            {% for formation in formations %}
+            <tr>
+                <td><a href="{{ path('show_formation', {'id': formation.id}) }}">{{formation.nom}}</a></td>
+                <td><a href="{{ path('delete_formation', {'id': formation.id}) }}"> Supprimer </a></td>
+            </tr>
+            {% endfor %}
+            <a href="{{ path('new_formation') }}">Nouvelle formation</a></br>
+        </table>
+        </div>
+        <div class="col">
+            <table class="table table-sm">
 
-    <h2><a href="{{ path('app_formation') }}">liste des Formations</a></h2>
+                <h2><a href="{{ path('app_module') }}">liste des Modules</a></h2>
+                
+                <tr>
+                    <th>Nom</th>
+                    <th>Categorie</th>
+                    <th>option</th>
+                </tr>
+                
+                {% for module in modules %}
+                <tr>
+                    <td><a href="{{ path('show_module', {'id': module.id}) }}">{{module.libelle}}</a></td>
+                    <td><a href="{{ path('show_categorie', {'id': module.categorie.id}) }}">{{module.categorie}}</a></td>
+                    <td><a href="{{ path('delete_module', {'id': module.id}) }}"> Supprimer </a></td>
+                </tr>
+                {% endfor %}
+                <a href="{{ path('new_module') }}">Nouveau module</a></br>
     
-    <tr>
-        <th>Nom</th>
-        <th>option</th>
-    </tr>
+            </table>
+        </div>
     
-    {% for formation in formations %}
-    <tr>
-        <td><a href="{{ path('show_formation', {'id': formation.id}) }}">{{formation.nom}}</a></td>
-        <td><a href="{{ path('delete_formation', {'id': formation.id}) }}"> Supprimer </a></td>
-    </tr>
-    {% endfor %}
-    <a href="{{ path('new_formation') }}">Nouvelle formation</a></br>
-</table>
+        
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-sm">
 
-<table>
-
-    <h2><a href="{{ path('app_module') }}">liste des Modules</a></h2>
+                <h2><a href="{{ path('app_categorie') }}">liste des Catégorie</a></h2>
+                
+                <tr>
+                    <th>Nom</th>
+                    <th>option</th>
+                </tr>
+                
+                {% for categorie in categories %}
+                <tr>
+                    <td><a href="{{ path('show_categorie', {'id': categorie.id}) }}">{{categorie.nom}}</a></td>
+                    <td><a href="{{ path('delete_categorie', {'id': categorie.id}) }}"> Supprimer </a></td>
+                </tr>
+                {% endfor %}
+                <a href="{{ path('new_categorie') }}">Nouvelle catégorie</a></br>
     
-    <tr>
-        <th>Nom</th>
-        <th>Categorie</th>
-        <th>option</th>
-    </tr>
+            </table>
+        </div>
+        
+        <div class="col">
+            <table class="table table-sm">
+
+                <h2><a href="{{ path('app_formateur') }}">liste des Formateurs</a></h2>
+                
+                <tr>
+                    <th>Nom</th>
+                    <th>option</th>
+                </tr>
+                
+                {% for formateur in formateurs %}
+                <tr>
+                    <td><a href="{{ path('show_formateur', {'id': formateur.id}) }}">{{formateur.nom}}</a></td>
+                    <td><a href="{{ path('delete_formateur', {'id': formateur.id}) }}"> Supprimer </a></td>
+                </tr>
+                {% endfor %}
+                <a href="{{ path('new_formateur') }}">Nouveau formateur</a></br>
     
-    {% for module in modules %}
-    <tr>
-        <td><a href="{{ path('show_module', {'id': module.id}) }}">{{module.libelle}}</a></td>
-        <td><a href="{{ path('show_categorie', {'id': module.categorie.id}) }}">{{module.categorie}}</a></td>
-        <td><a href="{{ path('delete_module', {'id': module.id}) }}"> Supprimer </a></td>
-    </tr>
-    {% endfor %}
-    <a href="{{ path('new_module') }}">Nouveau module</a></br>
-
-</table>
-
-<table>
-
-    <h2><a href="{{ path('app_categorie') }}">liste des Catégorie</a></h2>
+            </table>
+        </div>
+        
+    </div>
     
-    <tr>
-        <th>Nom</th>
-        <th>option</th>
-    </tr>
-    
-    {% for categorie in categories %}
-    <tr>
-        <td><a href="{{ path('show_categorie', {'id': categorie.id}) }}">{{categorie.nom}}</a></td>
-        <td><a href="{{ path('delete_categorie', {'id': categorie.id}) }}"> Supprimer </a></td>
-    </tr>
-    {% endfor %}
-    <a href="{{ path('new_categorie') }}">Nouvelle catégorie</a></br>
-
-</table>
-
-<table>
-
-    <h2><a href="{{ path('app_formateur') }}">liste des Formateurs</a></h2>
-    
-    <tr>
-        <th>Nom</th>
-        <th>option</th>
-    </tr>
-    
-    {% for formateur in formateurs %}
-    <tr>
-        <td><a href="{{ path('show_formateur', {'id': formateur.id}) }}">{{formateur.nom}}</a></td>
-        <td><a href="{{ path('delete_formateur', {'id': formateur.id}) }}"> Supprimer </a></td>
-    </tr>
-    {% endfor %}
-    <a href="{{ path('new_formateur') }}">Nouveau formateur</a></br>
-
-</table>
-
+</div>
 
 {% endblock %}
